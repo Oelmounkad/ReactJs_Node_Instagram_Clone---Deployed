@@ -1,0 +1,4 @@
+{
+    "mongoURI" : "mongodb+srv://oelmounkad:11811294@contactkeeper-zg1tl.mongodb.net/instagramclone?retryWrites=true&w=majority",
+    "jwtSecret" : "secret"
+}
