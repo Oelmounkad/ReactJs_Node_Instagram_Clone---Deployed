@@ -16,11 +16,15 @@ router.post('/', auth , async (req, res) => {
         post: req.body.post,
         content: req.body.content
     })
-    //User.update({ _id: req.user._id }, { $addToSet : { externalids: newBook._id }}
+
+    // Gets the commented post
     let post = await Post.findById(req.body.post)
+
+    //Adds the comment to the post array of comments && save
     post.comments.push(newComment)
     post.save()
 
+    //Saves the comment
     const resultcomment = await newComment.save()
     res.json(resultcomment)
 
@@ -30,27 +34,27 @@ router.post('/', auth , async (req, res) => {
 
 
 
-// DELETE /api/posts/:id
-// @desc Delete's a user's post
+// DELETE /api/comments/:id
+// @desc Delete's a user's comment
 // @access Private
 
 router.delete('/:id', auth , async (req,res) => {
 
-    const post = await Post.findById(req.params.id)
+    const comment = await Comment.findById(req.params.id)
 
-    // Check if post exists
-    if(!post) {
-        return res.status(404).send('Post doesn\'t exist !')
+    // Check if comment exists
+    if(!comment) {
+        return res.status(404).send('Comment doesn\'t exist !')
     }
 
-    // Check if user owns the post
-    if(post.user.toString() !== req.user.id ) {
+    // Check if user owns the comment
+    if(comment.user.toString() !== req.user.id ) {
         return res.status(401).send('Not authorized to delete this resource !')
     }
 
     else{
-        await Post.findByIdAndDelete(req.params.id)
-        res.send('Post deleted !')
+        await Comment.findByIdAndDelete(req.params.id)
+        res.send('Comment deleted !')
     }
 })
 
