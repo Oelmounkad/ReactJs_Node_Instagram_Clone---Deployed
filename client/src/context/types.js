@@ -13,4 +13,5 @@ export const LOGOUT = 'LOGOUT'
 
 // Posts
 export const GET_ALL_POSTS = 'GET_ALL_POSTS'
+export const POST_ADD_LIKE = 'POST_ADD_LIKE'
 export const POST_ERROR = 'POST_ERROR'

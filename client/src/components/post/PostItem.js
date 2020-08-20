@@ -1,6 +1,14 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import moment from 'moment'
+
+import PostContext from '../../context/post/PostContext'
+
 const PostItem = ({post}) => {
+
+    const postContext = useContext(PostContext)
+    const {postAddLike} = postContext
+
+
     return (
         <div class="photo">
         <header class="photo__header">
@@ -13,23 +21,16 @@ const PostItem = ({post}) => {
         <img width="100%" src={post.img_url} />
         <div class="photo__info">
             <div class="photo__actions">
-                <span class="photo__action">
-                <i class="far fa-heart fa-lg"></i>
+                <span onClick={() => postAddLike(post._id)} class="photo__action">
+                <i class={ post.likers.filter(liker => liker._id == JSON.parse(localStorage.getItem('user'))._id ).length !== 0 ? "fas fa-heart fa-lg ico-red" :"far fa-heart fa-lg"}></i>
                 </span>
                 <span class="photo__action">
                 <i class="far fa-comment fa-lg"></i>
                 </span>
+
             </div>
             <span class="photo__likes">{post.likes} likes</span>
-           
-            <ul class="photo__comments"> 
-            {post.comments.map( comment => 
-                <li class="photo__comment">
-                <span class="photo__comment-author">{comment.user.name}</span> {comment.content}
-            </li>
-                )}
-                
-            </ul>
+         
             <span class="photo__time-ago">{ moment(post.date).fromNow() }</span>
             <div class="photo__add-comment-container">
                 <textarea name="comment" placeholder="Add a comment..."></textarea>

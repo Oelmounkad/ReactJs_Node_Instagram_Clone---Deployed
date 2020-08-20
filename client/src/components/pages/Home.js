@@ -16,10 +16,10 @@ import PostItem from '../post/PostItem'
     return (
         <main id="feed">
             { allPosts !== null ? 
-            allPosts.map(post =>  
+            allPosts.map(post => ( 
 
                 <PostItem key={post._id} post={post} />
-                
+                )
                 ) : <div>Waiting...</div> }
         </main>
     )

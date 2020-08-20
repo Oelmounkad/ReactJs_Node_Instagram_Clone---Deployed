@@ -1,6 +1,7 @@
 import {
     GET_ALL_POSTS,
-    POST_ERROR
+    POST_ERROR,
+    POST_ADD_LIKE
 } from '../types'
 
 export default (state,action) => {
@@ -10,6 +11,12 @@ export default (state,action) => {
             ...state,
             allPosts : action.payload
         }
+        case POST_ADD_LIKE:
+            return {
+                ...state,
+                allPosts : state.allPosts.map(post => post._id === action.payload.postid ? 
+                    { ...post, likes: post.likes+1 , likers: [ action.payload.liker,...post.likers]  }: post)
+            }
         case POST_ERROR: 
         return {
             ...state,
