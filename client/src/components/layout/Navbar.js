@@ -1,20 +1,24 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import logo from '../../images/navbar/logo.png'
 
+import AuthContext from '../../context/auth/AuthContext'
 
 const Navbar = () => {
-
     
+    const authContext = useContext(AuthContext);
 
-    return (
-        <nav class="navigation">
-        <div class="navigation__column">
+    const {isAuthenticated} = authContext
+    
+    const authLinks = (
+        <>
+          <div class="navigation__column">
             <a href="feed.html">
                 
                 <img src={logo} />
             </a>
         </div>
-        <div class="navigation__column">
+
+               <div class="navigation__column">
             <i class="fa fa-search"></i>
             <input type="text" placeholder="Search" />
         </div>
@@ -42,6 +46,24 @@ const Navbar = () => {
                 </li>
             </ul>
         </div>
+        </>
+      )
+
+      const guestLinks = (
+        <>
+        <div class="navigation__column">
+            <a href="feed.html">
+                
+                <img src={logo} />
+            </a>
+        </div>
+        </>
+      )
+    
+
+    return (
+        <nav class="navigation">
+      { isAuthenticated ?  authLinks : guestLinks}
     </nav>
     )
 }

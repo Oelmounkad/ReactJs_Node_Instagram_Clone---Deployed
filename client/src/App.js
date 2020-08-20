@@ -1,11 +1,5 @@
-import React,{useEffect} from 'react';
-/*
-import phoneImage from './images/phoneImage.png'
-import loginLogo from './images/loginLogo.png'
+import React from 'react';
 
-import iosLogo from './images/ios.png'
-import androidLogo from './images/android.png'
-*/
 import {BrowserRouter as Router , Switch, Route} from 'react-router-dom';
 
 import './App.css';
@@ -13,24 +7,32 @@ import Login from './components/auth/Login';
 import Home from './components/pages/Home'
 import Navbar from './components/layout/Navbar';
 
-const App = () => {
+import AuthState from '../src/context/auth/AuthState'
+import PrivateRoute from './routing/PrivateRoute';
+import PostState from './context/post/PostState';
+import About from './components/pages/About';
 
-  console.log('from app : '+window.location.pathname)
+const App = () => {
 
   return (
     
+    <AuthState>
+      <PostState>
     <Router>
-      
-      { window.location.pathname !== '/login' &&  <Navbar />  }
+
+     <Navbar />
     
       <Switch>
-
-      <Route exact path="/" component={Home} />
+      
+      <PrivateRoute exact path="/" component={Home} />
       <Route exact path="/login" component={Login} />
+      <Route exact path="/about" component={About} />
 
       </Switch>
 
     </Router>
+    </PostState>
+    </AuthState>
     
   );
 }

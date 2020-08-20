@@ -1,11 +1,27 @@
-import React from 'react'
+import React,{useContext} from 'react'
 
- const Home = (props) => {
-     //console.log('from home : '+props.location.pathname)
+import PostContext from '../../context/post/PostContext'
+import { useEffect } from 'react'
+import PostItem from '../post/PostItem'
+
+ const Home = () => {
+     
+    const postContext = useContext(PostContext)
+    const {allPosts,getAllPosts} = postContext
+
+    useEffect(() => {
+        getAllPosts()
+    }, [])
+
     return (
-        <div>
-            <h1>Home page</h1>
-        </div>
+        <main id="feed">
+            { allPosts !== null ? 
+            allPosts.map(post =>  
+
+                <PostItem key={post._id} post={post} />
+                
+                ) : <div>Waiting...</div> }
+        </main>
     )
 }
 export default Home

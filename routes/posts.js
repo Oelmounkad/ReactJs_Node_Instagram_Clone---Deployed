@@ -13,7 +13,9 @@ router.get('/all' , async (req,res) => {
 
     const posts = await Post.find()
     .populate([{path: 'user' , select: 'name'},
-    {path: 'comments' , select: 'content'}])
+    {path: 'comments',populate: {
+        path: 'user'
+      }}])
 
     if(!posts) {
         return res.status(404).send('No posts in the database !')
