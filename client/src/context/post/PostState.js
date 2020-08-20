@@ -11,7 +11,8 @@ import AuthContext from '../auth/AuthContext'
 import {
     GET_ALL_POSTS,
     POST_ERROR,
-    POST_ADD_LIKE
+    POST_ADD_LIKE,
+    POST_DELETE_LIKE
 } from '../types'
 
 
@@ -55,7 +56,6 @@ const {user} = authContext
         }
         try {
             const res = await axios.put(`/api/posts/like/${id}`)
-            console.log(res.data)
             const liker = {
                 _id:user._id,
                 name: user.name
@@ -74,13 +74,45 @@ const {user} = authContext
         }
     }
 
+       // Post delete Like
+       const postDeletelike = async (id) => {
+        if(localStorage.token){
+            setAuthToken(localStorage.token)
+        }
+        try {
+            const res = await axios.put(`/api/posts/unlike/${id}`)
+            const liker = {
+                _id:user._id,
+                name: user.name
+            }
+            const data = {
+                liker,
+                postid: res.data._id
+            }
+            dispatch({
+                type: POST_DELETE_LIKE,
+                payload: data
+            })
+          
+        } catch (err) {
+        
+        }
+    }
+
+
+    // Comment a post
+    
+
+
+
    return (
        <PostContext.Provider 
        value={{
         allPosts: state.allPosts,
         error: state.error,
         getAllPosts,
-        postAddLike
+        postAddLike,
+        postDeletelike
        }}>
 
            {props.children}

@@ -155,4 +155,47 @@ router.put('/like/:id', auth , async (req,res) => {
     }
 })
 
+// PUT /api/posts/:id
+// @desc Likes a Post
+// @access Private
+
+router.put('/unlike/:id', auth , async (req,res) => {
+
+    try {
+        let post = await Post.findById(req.params.id)
+        let currentLikes = post.likes
+        let newLikes = currentLikes - 1
+
+        const updatedPost = {
+            likes: newLikes
+        }
+        // Check if the post exists in the database
+        if(!post) 
+               return res.status(404).send('Post not found !')
+
+            let l = post.likers.filter( liker => req.user.id == liker)
+
+        if(l.length !== 0 ) {
+        
+            // Update the post
+            post = await Post.findByIdAndUpdate(req.params.id,
+           {$set : updatedPost},
+           {new: true})
+            post.likers.splice(post.likers.indexOf(req.user.id), 1)
+            post.save()  
+            res.json(post)
+                                            } 
+           else{
+            res.status(401).json('you already dont like this post !')
+                } 
+         
+       
+
+      
+    } catch (err) {
+        res.status(500).send('Server Error')
+    }
+})
+
+
 module.exports = router

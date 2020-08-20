@@ -74,7 +74,16 @@
   resize: none;
   height: 20px;
 }
+.photo__add-comment-container > input[type=submit] {
+  background-color: white;
+  border: none;
+  color: #0095F7;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-weight: bold;
+  text-decoration: none;
 
+  cursor: pointer;
+}
 .photo__add-comment-container textarea:focus,
 .photo__add-comment-container textarea:active {
   outline: none;
