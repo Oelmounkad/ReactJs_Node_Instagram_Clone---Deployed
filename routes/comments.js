@@ -4,6 +4,24 @@ const auth = require('../middleware/auth')
 const Comment = require('../models/Comment')
 const Post = require('../models/Post')
 
+
+
+// GET /api/comments
+// @desc Gets a comment
+// @access Private
+
+router.get('/:id', async (req, res) => {
+
+ 
+     // Gets the comment
+     let comment = await Comment.findById(req.params.id).populate({path: 'user'})
+
+     res.json(comment)
+ 
+ })
+ 
+
+
 // POST /api/comments
 // @desc Adds a comment
 // @access Private
@@ -26,7 +44,11 @@ router.post('/', auth , async (req, res) => {
 
     //Saves the comment
     const resultcomment = await newComment.save()
-    res.json(resultcomment)
+
+  // Gets the comment
+  let comment = await Comment.findById(resultcomment._id).populate({path: 'user'})
+
+  res.json(comment)
 
 })
 

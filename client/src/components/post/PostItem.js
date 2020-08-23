@@ -6,7 +6,7 @@ import PostContext from '../../context/post/PostContext'
 const PostItem = ({post}) => {
 
     const postContext = useContext(PostContext)
-    const {postAddLike,postDeletelike} = postContext
+    const {postAddLike,postDeletelike,commentPost} = postContext
 
     const likeorUnlike = id => {
         post.likers.filter(liker => liker._id == JSON.parse(localStorage.getItem('user'))._id ).length !== 0 ?
@@ -21,7 +21,16 @@ const PostItem = ({post}) => {
 
     const onSubmit = e => {
         e.preventDefault()
-        console.log(comment)
+
+        const data = {
+            post_id : post._id,
+            commentData: comment
+        }
+
+       // console.log(comment)
+
+        commentPost(data)
+        setComment('')
 
     }
 
@@ -32,7 +41,7 @@ const PostItem = ({post}) => {
             <img src="images/avatar.jpg" class="photo__avatar" />
             <div class="photo__user-info">
                 <span class="photo__author">{post.user.name}</span>
-                <span class="photo__location">Bestechung</span>
+                <span class="photo__location">location xD</span>
             </div>
         </header>
         <img width="100%" src={post.img_url} />
@@ -47,7 +56,14 @@ const PostItem = ({post}) => {
 
             </div>
             <span class="photo__likes">{post.likes} likes</span>
-         
+            <ul class="photo__comments">
+                { post.comments.map( comment => 
+                     <li class="photo__comment">
+                        <span class="photo__comment-author">{comment.user.name}</span> {comment.content}
+                    </li>
+                    ) }
+                   
+                </ul>
             <span class="photo__time-ago">{ moment(post.date).fromNow() }</span>
             
                 <form class="photo__add-comment-container" onSubmit={onSubmit}>

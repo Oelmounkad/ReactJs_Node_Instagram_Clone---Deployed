@@ -4,7 +4,7 @@ import PostContext from '../../context/post/PostContext'
 import { useEffect } from 'react'
 import PostItem from '../post/PostItem'
 
- const Home = () => {
+ const Feed = () => {
      
     const postContext = useContext(PostContext)
     const {allPosts,getAllPosts} = postContext
@@ -24,4 +24,4 @@ import PostItem from '../post/PostItem'
         </main>
     )
 }
-export default Home
+export default Feed

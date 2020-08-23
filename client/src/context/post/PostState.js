@@ -12,7 +12,8 @@ import {
     GET_ALL_POSTS,
     POST_ERROR,
     POST_ADD_LIKE,
-    POST_DELETE_LIKE
+    POST_DELETE_LIKE,
+    ADD_COMMENT
 } from '../types'
 
 
@@ -101,7 +102,22 @@ const {user} = authContext
 
 
     // Comment a post
-    
+    const commentPost = async (parameterData) => {
+        if(localStorage.token){
+            setAuthToken(localStorage.token)
+        }
+        const data = {
+            user : user._id ,
+            post : parameterData.post_id ,
+            content : parameterData.commentData
+        }
+        const res = await axios.post('/api/comments',data)
+        dispatch({
+            type: ADD_COMMENT,
+            payload: res.data
+        })
+        
+    }
 
 
 
@@ -112,7 +128,8 @@ const {user} = authContext
         error: state.error,
         getAllPosts,
         postAddLike,
-        postDeletelike
+        postDeletelike,
+        commentPost
        }}>
 
            {props.children}

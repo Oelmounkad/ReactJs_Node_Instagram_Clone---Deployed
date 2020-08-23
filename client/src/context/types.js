@@ -16,3 +16,7 @@ export const GET_ALL_POSTS = 'GET_ALL_POSTS'
 export const POST_ADD_LIKE = 'POST_ADD_LIKE'
 export const POST_DELETE_LIKE = 'POST_DELETE_LIKE'
 export const POST_ERROR = 'POST_ERROR'
+
+//Comments
+export const ADD_COMMENT = 'ADD_COMMENT'
+
