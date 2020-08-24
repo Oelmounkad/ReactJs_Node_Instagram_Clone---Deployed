@@ -15,6 +15,7 @@ import ProfileState from './context/profile/ProfileState';
 import PrivateRoute from './routing/PrivateRoute';
 
 import About from './components/pages/About';
+import EditProfile from './components/pages/EditProfile';
 
 const App = () => {
 
@@ -33,7 +34,7 @@ const App = () => {
       <Route exact path="/login" component={Login} />
       <Route exact path="/about" component={About} />
       <Route exact path="/:userId" component={Profile} />
-
+      <Route exact path="/accounts/edit/" component={EditProfile} />
       </Switch>
 
     </Router>

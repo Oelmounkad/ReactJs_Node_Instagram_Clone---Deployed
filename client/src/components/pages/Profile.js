@@ -2,10 +2,17 @@ import React,{useEffect,useContext} from 'react'
 
 import ProfileContext from '../../context/profile/ProfileContext'
 
+import AuthContext from '../../context/auth/AuthContext'
+
+import {Link} from 'react-router-dom'
+
 const Profile = props => {
 
     const profileContext = useContext(ProfileContext)
     const {getProfile,profileData,profilePosts} = profileContext
+
+    const authContext = useContext(AuthContext)
+    const {user} = authContext
 
     const { match: { params } } = props
 
@@ -26,8 +33,13 @@ useEffect(() => {
             <div class="profile__column">
                 <div class="profile__title">
                     <h3 class="profile__username">{profileData.name}</h3>
-                    <a href="edit-profile.html">Edit profile</a>
-                    <i class="fa fa-cog fa-lg"></i>
+                    { profileData._id === user._id &&  
+                    <>
+                            <Link to="/accounts/edit">Edit profile</Link>
+                            <i class="fa fa-cog fa-lg"></i>
+                    </>
+                            }
+                    
                 </div>
                 <ul class="profile__stats">
                     <li class="profile__stat">

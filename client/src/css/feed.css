@@ -109,6 +109,7 @@
 
 .photo__comment {
   margin-bottom: 10px;
+  word-wrap: break-word
 }
 
 .photo__comments .photo__comment-author {

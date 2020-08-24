@@ -27,6 +27,14 @@ const UserSchema = mongoose.Schema({
     bio: {
         type: String,
         required: false
+    }, 
+    website:{
+        type:String,
+        required:false
+    },
+    phone:{
+        type: String,
+        required: false
     },
     acc_privacy:{
         type: String
