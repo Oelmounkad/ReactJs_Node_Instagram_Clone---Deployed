@@ -19,4 +19,8 @@ export const POST_ERROR = 'POST_ERROR'
 
 //Comments
 export const ADD_COMMENT = 'ADD_COMMENT'
+export const COMMENT_ERROR = 'COMMENT_ERROR'
 
+//Profile
+export const SET_PROFILE = 'SET_PROFILE'
+export const ERROR_PROFILE = 'ERROR_PROFILE'

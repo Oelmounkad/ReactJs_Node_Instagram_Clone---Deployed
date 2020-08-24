@@ -12,7 +12,7 @@ const Post = require('../models/Post')
 router.get('/all' , async (req,res) => {
 
     const posts = await Post.find()
-    .populate([{path: 'user' , select: 'name'},
+    .populate([{path: 'user' , select: 'name profile_pic'},
     {path: 'likers' , select: 'name'},
     {path: 'comments',populate: {
         path: 'user'
@@ -36,8 +36,35 @@ router.get('/all' , async (req,res) => {
 router.get('/', auth , async (req,res) => {
 
     const posts = await Post.find({user: req.user.id})
-    .populate([{path: 'user' , select: 'name'},
+    .populate([{path: 'user' , select: 'name profile_pic'},
     {path: 'likers' , select: 'name'},
+    {path: 'comments',populate: {
+        path: 'user'
+      }}])
+
+    if(!posts) {
+        return res.status(404).send('No posts found !')
+    }
+    else{
+        res.json(posts)
+    }
+
+
+
+})
+
+
+// GET /api/posts/user/:id
+// @desc Gets all user's posts with id
+// @access Public
+
+router.get('/user/:id', async (req,res) => {
+
+    // here need to add if account is private ..
+
+    const posts = await Post.find({user: req.params.id})
+    .populate([
+        {path: 'likers' , select: 'name'},
     {path: 'comments',populate: {
         path: 'user'
       }}])

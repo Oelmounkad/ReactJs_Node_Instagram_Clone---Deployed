@@ -20,7 +20,11 @@ import PostItem from '../post/PostItem'
 
                 <PostItem key={post._id} post={post} />
                 )
-                ) : <div>Waiting...</div> }
+                ) : <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                    </div>
+</div> }
         </main>
     )
 }

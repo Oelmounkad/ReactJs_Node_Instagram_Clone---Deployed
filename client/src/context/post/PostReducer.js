@@ -3,7 +3,8 @@ import {
     POST_ERROR,
     POST_ADD_LIKE,
     POST_DELETE_LIKE,
-    ADD_COMMENT
+    ADD_COMMENT,
+    COMMENT_ERROR
 } from '../types'
 
 export default (state,action) => {
@@ -27,7 +28,8 @@ export default (state,action) => {
                     { ...post, likes: post.likes-1 , likers: post.likers.
                         filter(liker => liker._id !== action.payload.liker._id)  }: post)
                 }
-        case POST_ERROR: 
+        case POST_ERROR:
+        case COMMENT_ERROR: 
         return {
             ...state,
             error : action.payload

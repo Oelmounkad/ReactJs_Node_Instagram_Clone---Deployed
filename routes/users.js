@@ -5,6 +5,8 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator');
 const config = require('config')
+const cloudinary = require('../utils/cloudinary')
+const { json } = require('express')
 
 // @route   POST api/users
 // @desc    Register a user
@@ -30,11 +32,31 @@ router.post('/',[
         if(user){
             return res.status(400).json({msg: 'User already exists'})
         }
+
+            // Upload user image
+        let img_url = ""
+
+        // upload image to cloudinary
+        await cloudinary.uploader.upload(req.body.profile_pic)
+        .then((result) => {
+            // Recuperate the url of the image stored
+          img_url = result.secure_url
+        })
+        .catch((error) => {
+          res.status(500).send({
+            message: "failure",
+            error,
+          })
+        })
+
+
         user = new User({
             name,
             email,
-            password
+            password,
+            profile_pic:img_url
         })
+
         const salt = await bcrypt.genSalt(10)
 
         user.password = await bcrypt.hash(password, salt)
@@ -64,5 +86,18 @@ router.post('/',[
     }
 
 })
+
+
+router.get('/:id' , async (req,res) => { 
+
+    const user = await User.findById(req.params.id).select('-password')
+    if(!user){
+        return res.status(404).json({msg: 'User doesn\'t exist'})
+    }else{
+        res.json(user)
+    }
+
+
+} )
 
 module.exports = router

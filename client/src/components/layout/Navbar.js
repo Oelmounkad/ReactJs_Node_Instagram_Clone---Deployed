@@ -2,6 +2,7 @@ import React,{useContext} from 'react'
 import logo from '../../images/navbar/logo.png'
 
 import AuthContext from '../../context/auth/AuthContext'
+import {Link} from 'react-router-dom'
 
 const Navbar = () => {
     
@@ -12,10 +13,9 @@ const Navbar = () => {
     const authLinks = (
         <>
           <div class="navigation__column">
-            <a href="feed.html">
-                
-                <img src={logo} />
-            </a>
+          <Link to="/">
+            <img src={logo} />
+            </Link>
         </div>
 
                <div class="navigation__column">
@@ -52,10 +52,9 @@ const Navbar = () => {
       const guestLinks = (
         <>
         <div class="navigation__column">
-            <a href="feed.html">
-                
-                <img src={logo} />
-            </a>
+            <Link to="/">
+            <img src={logo} />
+            </Link>
         </div>
         </>
       )

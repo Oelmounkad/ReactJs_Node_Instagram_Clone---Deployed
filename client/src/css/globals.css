@@ -4,6 +4,12 @@ body {
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
 }
+a {
+  color: black;
+}
+a:hover {
+  color: black
+}
 /*
 main {
   animation: fadeInMain 0.5s linear;

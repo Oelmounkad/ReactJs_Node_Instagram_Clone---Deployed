@@ -13,7 +13,8 @@ import {
     POST_ERROR,
     POST_ADD_LIKE,
     POST_DELETE_LIKE,
-    ADD_COMMENT
+    ADD_COMMENT,
+    COMMENT_ERROR
 } from '../types'
 
 
@@ -71,7 +72,10 @@ const {user} = authContext
             })
           
         } catch (err) {
-        
+            dispatch({
+                type : POST_ERROR,
+                payload: err.response.data 
+            })
         }
     }
 
@@ -96,7 +100,10 @@ const {user} = authContext
             })
           
         } catch (err) {
-        
+            dispatch({
+                type : COMMENT_ERROR,
+                payload: err.response.data 
+            })
         }
     }
 
@@ -106,7 +113,8 @@ const {user} = authContext
         if(localStorage.token){
             setAuthToken(localStorage.token)
         }
-        const data = {
+        try {
+             const data = {
             user : user._id ,
             post : parameterData.post_id ,
             content : parameterData.commentData
@@ -116,6 +124,13 @@ const {user} = authContext
             type: ADD_COMMENT,
             payload: res.data
         })
+        } catch (err) {
+            dispatch({
+                type : COMMENT_ERROR,
+                payload: err.response.data 
+            })
+        }
+       
         
     }
 

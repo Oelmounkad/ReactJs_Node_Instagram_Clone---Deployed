@@ -1,6 +1,6 @@
 import React,{useContext, useState} from 'react'
 import moment from 'moment'
-
+import {Link} from 'react-router-dom'
 import PostContext from '../../context/post/PostContext'
 
 const PostItem = ({post}) => {
@@ -38,11 +38,19 @@ const PostItem = ({post}) => {
     return (
         <div class="photo">
         <header class="photo__header">
-            <img src="images/avatar.jpg" class="photo__avatar" />
+            <Link to={`/${post.user._id}`}>
+            <img src={post.user.profile_pic} class="photo__avatar" />
+            </Link>
+            
             <div class="photo__user-info">
-                <span class="photo__author">{post.user.name}</span>
+                <span class="photo__author">
+                <Link style={{textDecoration: 'none'}} to={`/${post.user._id}`}>
+                    {post.user.name}
+                    </Link>
+                    </span>
                 <span class="photo__location">location xD</span>
             </div>
+            <i class="fas fa-ellipsis-h"></i>
         </header>
         <img width="100%" src={post.img_url} />
         <div class="photo__info">
@@ -55,7 +63,7 @@ const PostItem = ({post}) => {
                 </span>
 
             </div>
-            <span class="photo__likes">{post.likes} likes</span>
+    <span class="photo__likes">{post.likes} { post.likes === 1 ? 'like' : 'likes' } </span>
             <ul class="photo__comments">
                 { post.comments.map( comment => 
                      <li class="photo__comment">

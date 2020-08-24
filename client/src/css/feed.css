@@ -25,6 +25,12 @@
   margin-right: 10px;
 }
 
+.photo__header > i {
+  margin-left: auto;
+  cursor: pointer;
+  /*order: 2;*/
+}
+
 .photo .photo__user-info .photo__author {
   display: block;
   font-weight: 600;
