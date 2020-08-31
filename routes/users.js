@@ -8,6 +8,8 @@ const config = require('config')
 const cloudinary = require('../utils/cloudinary')
 const { json } = require('express')
 
+const auth = require('../middleware/auth')
+
 // @route   POST api/users
 // @desc    Register a user
 // @access  Public
@@ -88,6 +90,10 @@ router.post('/',[
 })
 
 
+
+// @route   POST api/users
+// @desc    Register a user
+// @access  Public
 router.get('/:id' , async (req,res) => { 
 
     const user = await User.findById(req.params.id).select('-password')
@@ -96,6 +102,44 @@ router.get('/:id' , async (req,res) => {
     }else{
         res.json(user)
     }
+
+
+} )
+
+
+
+// @route   PUT api/users/:id
+// @desc    Edits a user's profile
+// @access  Private
+router.put('/:id' , auth , async (req,res) => { 
+
+try {
+    let user = await User.findById(req.params.id)
+    const {name,fullname,bio,email,website,phone} = req.body
+    const modifications = {}
+
+    if(name) modifications.name = name
+    if(fullname) modifications.fullname = fullname
+    if(bio) modifications.bio = bio
+    if(email) modifications.email = email
+    if(website) modifications.website = website
+    if(phone) modifications.phone = phone
+
+    if(!user){
+        return res.status(404).json({msg: 'User doesn\'t exist'})
+    }
+    else{
+        // Update the profile
+    user = await User.findByIdAndUpdate(req.params.id,
+        {$set : modifications},
+        {new: true})
+
+        res.json(user)
+    } 
+} catch (err) {
+    console.log(err)
+}
+   
 
 
 } )

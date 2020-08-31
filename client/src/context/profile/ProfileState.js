@@ -49,6 +49,25 @@ const ProfileState = props => {
 
    }
 
+   //Edit Profile
+   const editProfile = async (userid,pData) => {
+       
+    if(localStorage.token){
+        setAuthToken(localStorage.token)
+    }
+
+       try {
+
+        await axios.put(`/api/users/${userid}`,pData)
+
+       } catch (err) {
+
+        dispatch({
+                type: ERROR_PROFILE,
+                payload: err.response.data
+            })
+       }
+   }
 
 
    return (
@@ -56,7 +75,8 @@ const ProfileState = props => {
        value={{
         profileData: state.profileData,
         profilePosts: state.profilePosts,
-        getProfile
+        getProfile,
+        editProfile
        }}>
 
            {props.children}

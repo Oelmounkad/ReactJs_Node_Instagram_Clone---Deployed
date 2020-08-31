@@ -3,12 +3,13 @@ import React,{useEffect,useContext,useState} from 'react'
 import ProfileContext from '../../context/profile/ProfileContext'
 import AuthContext from '../../context/auth/AuthContext'
 
-
+import { useHistory } from 'react-router-dom'
 
  const EditProfile = () => {
+    const history = useHistory()
 
     const profileContext = useContext(ProfileContext)
-    const {getProfile,profileData} = profileContext
+    const {getProfile,editProfile,profileData} = profileContext
 
     const authContext = useContext(AuthContext) 
     const {user} = authContext
@@ -30,7 +31,11 @@ import AuthContext from '../../context/auth/AuthContext'
     }
     const onSubmit = e => {
         e.preventDefault()
-        console.log(profile)
+        //console.log(profile)
+        editProfile(user._id,profile)
+        history.push(`/${user._id}`)
+        
+
     }
 
     
@@ -78,7 +83,7 @@ import AuthContext from '../../context/auth/AuthContext'
                 </div>
                 <div class="form__row">
                     <label for="website" class="form__label">Website:</label>
-                    <input id="website" type="url" class="form__input" name="website" value={profile.website} onChange={onChange} />
+                    <input id="website" type="text" class="form__input" name="website" value={profile.website} onChange={onChange} />
                 </div>
                 <div class="form__row">
                     <label for="bio" class="form__label">Bio:</label>
