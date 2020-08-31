@@ -3,31 +3,19 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
-const { check, validationResult } = require('express-validator');
+
 const config = require('config')
 const cloudinary = require('../utils/cloudinary')
-const { json } = require('express')
 
 const auth = require('../middleware/auth')
 
 // @route   POST api/users
 // @desc    Register a user
 // @access  Public
-router.post('/',[
-    check('name','Please Name is required')
-    .not()
-    .isEmpty(),
-    check('email','Please include a valid email')
-    .isEmail(),
-    check('password','Please enter a password with 6 or more characters')
-    .isLength({min: 6})
-],async (req,res) => {
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-        return res.status(400).json({error: errors.array()})
-    }
+router.post('/',async (req,res) => {
+
     
-    const {name, email, password} = req.body 
+    const {name, fullname, email, password} = req.body 
 
     try {
         let user = await User.findOne({email})
@@ -35,9 +23,11 @@ router.post('/',[
             return res.status(400).json({msg: 'User already exists'})
         }
 
-            // Upload user image
         let img_url = ""
 
+        if(req.body.profile_pic){
+           // Upload user image
+        
         // upload image to cloudinary
         await cloudinary.uploader.upload(req.body.profile_pic)
         .then((result) => {
@@ -50,10 +40,13 @@ router.post('/',[
             error,
           })
         })
+}
+     
 
 
         user = new User({
             name,
+            fullname,
             email,
             password,
             profile_pic:img_url
@@ -82,7 +75,7 @@ router.post('/',[
         )
 
     } catch (err) {
-        console.error(err.message)
+        console.log(err)
         res.status(500).send('Server error')
         
     }
@@ -92,7 +85,7 @@ router.post('/',[
 
 
 // @route   POST api/users
-// @desc    Register a user
+// @desc    Gets a user
 // @access  Public
 router.get('/:id' , async (req,res) => { 
 

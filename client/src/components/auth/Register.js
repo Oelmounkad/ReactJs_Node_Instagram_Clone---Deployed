@@ -1,6 +1,7 @@
 import React,{useState,useContext,useEffect} from 'react'
 
-import {Link} from 'react-router-dom'
+import {Link} from "react-router-dom"
+
 import phoneImage from '../../images/login/phoneImage.png'
 import loginLogo from '../../images/login/loginLogo.png'
 
@@ -10,16 +11,18 @@ import androidLogo from '../../images/login/android.png'
 import AuthContext from '../../context/auth/AuthContext'
 
 
- const Login = (props) => {
+ const Register = (props) => {
 
     const [user, setUser] = useState({
         email: '',
-        password: ''
+        password: '',
+        fullname: '',
+        name: ''
     })
     const [localError, setLocalError] = useState('')
 
     const authContext = useContext(AuthContext)
-    const {login,isAuthenticated,error} = authContext
+    const {register,isAuthenticated,error} = authContext
 
     useEffect(() => {
 
@@ -39,9 +42,8 @@ import AuthContext from '../../context/auth/AuthContext'
     }
     const onSubmit = e => {
         e.preventDefault()
-
-        // Login
-        login(user)
+        console.log(user)
+        register(user)
     }
 
     return (
@@ -56,7 +58,10 @@ import AuthContext from '../../context/auth/AuthContext'
                 <form onSubmit={onSubmit} class="login__form">
                     <input type="email" name="email" placeholder="Email" value={user.email} onChange={onChange} required />
                     <input type="password" name="password" placeholder="Password" value={user.password} onChange={onChange} required />
-                    <input type="submit" value="Log in" />
+                    <input type="text" name="name" placeholder="Username" value={user.name} onChange={onChange} required />
+                    <input type="text" name="fullname" placeholder="Full Name" value={user.fullname} onChange={onChange} required />
+                    
+                    <input type="submit" value="Sign Up" />
                 </form>
 
                 <p style={{color: 'red'}}> {localError} </p>
@@ -67,13 +72,9 @@ import AuthContext from '../../context/auth/AuthContext'
                     Log in with Facebook
                 </a>
 
-                
-
-
-                <a href="#" class="login__link login__link--small">Forgot password</a>
             </div>
             <div class="login__box">
-                <span>Don't have an account?</span> <Link to='/register'>Sign up</Link>
+                <span>Already have an account?</span> <Link to='/login'>Log In</Link>
             </div>
             <div class="login__box--transparent">
                 <span>Get the app.</span>
@@ -87,4 +88,4 @@ import AuthContext from '../../context/auth/AuthContext'
     )
 }
 
-export default Login
+export default Register

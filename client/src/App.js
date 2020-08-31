@@ -4,6 +4,7 @@ import {BrowserRouter as Router , Switch, Route} from 'react-router-dom';
 
 import './App.css';
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import Feed from './components/pages/Feed'
 import Profile from './components/pages/Profile'
 import Navbar from './components/layout/Navbar';
@@ -32,6 +33,7 @@ const App = () => {
       
       <PrivateRoute exact path="/" component={Feed} />
       <Route exact path="/login" component={Login} />
+      <Route exact path="/register" component={Register} />
       <Route exact path="/about" component={About} />
       <Route exact path="/:userId" component={Profile} />
       <Route exact path="/accounts/edit/" component={EditProfile} />
