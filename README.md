@@ -17,4 +17,4 @@ npm run dev
 
 ## The Application Link:
 
-not deployed yet :D
+https://instagram-clone-ouss.herokuapp.com/
