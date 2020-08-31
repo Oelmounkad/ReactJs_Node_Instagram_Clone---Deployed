@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const connectDB = require('./config/db')
+const path = require('path')
 
 //Connect DB
 connectDB()
@@ -24,6 +25,16 @@ app.use('/api/posts',require('./routes/posts'))
 
 // Comments routes
 app.use('/api/comments',require('./routes/comments'))
+
+//Serve static assets in production
+
+if(process.env.NODE_ENV === 'production'){
+    //Set static folder
+    app.use(express.static('client/build'))
+
+    app.get('*', (req,res) => res.sendFile(path.resolve(__dirname,'client','build','index.html')))
+}
+
 
 
 // App listening to the port
