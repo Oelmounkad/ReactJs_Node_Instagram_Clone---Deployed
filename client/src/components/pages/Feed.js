@@ -9,9 +9,10 @@ import PostItem from '../post/PostItem'
     const postContext = useContext(PostContext)
     const {allPosts,getAllPosts} = postContext
 
+    
     useEffect(() => {
         getAllPosts()
-    }, [])
+    })
 
     return (
         <main id="feed">

@@ -2,14 +2,19 @@ import React,{useContext, useState} from 'react'
 import moment from 'moment'
 import {Link} from 'react-router-dom'
 import PostContext from '../../context/post/PostContext'
-
+import AuthContext from '../../context/auth/AuthContext'
 const PostItem = ({post}) => {
+
+    
 
     const postContext = useContext(PostContext)
     const {postAddLike,postDeletelike,commentPost} = postContext
 
+    const authContext = useContext(AuthContext)
+    const {user} = authContext
+
     const likeorUnlike = id => {
-        post.likers.filter(liker => liker._id == JSON.parse(localStorage.getItem('user'))._id ).length !== 0 ?
+        post.likers.filter(liker => liker._id == user._id ).length !== 0 ?
         postDeletelike(id) : postAddLike(id)
     }
 
@@ -36,7 +41,9 @@ const PostItem = ({post}) => {
 
 
     return (
-        <div class="photo">
+        <>
+ {post !== null && user !== null &&  <div class="photo">
+           
         <header class="photo__header">
             <Link to={`/${post.user._id}`}>
             <img src={post.user.profile_pic} class="photo__avatar" />
@@ -55,9 +62,11 @@ const PostItem = ({post}) => {
         <img width="100%" src={post.img_url} />
         <div class="photo__info">
             <div class="photo__actions">
+                
                 <span onClick={() => likeorUnlike(post._id)} class="photo__action">
-                <i class={ post.likers.filter(liker => liker._id == JSON.parse(localStorage.getItem('user'))._id ).length !== 0 ? "fas fa-heart fa-lg ico-red" :"far fa-heart fa-lg"}></i>
+                <i class={ post.likers.filter(liker => liker._id == user._id ).length !== 0 ? "fas fa-heart fa-lg ico-red" :"far fa-heart fa-lg"}></i>
                 </span>
+
                 <span class="photo__action">
                 <i class="far fa-comment fa-lg"></i>
                 </span>
@@ -80,7 +89,10 @@ const PostItem = ({post}) => {
                 </form>
             
         </div>
-    </div>
+    </div>}
+    </>
+       
+       
     )
 }
 export default PostItem
