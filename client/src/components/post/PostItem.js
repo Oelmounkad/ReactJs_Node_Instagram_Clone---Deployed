@@ -75,11 +75,14 @@ const PostItem = ({post}) => {
     <span class="photo__likes">{post.likes} { post.likes === 1 ? 'like' : 'likes' } </span>
             <ul class="photo__comments">
             <li class="photo__comment">
-                        <span class="photo__comment-author">{post.user.name}</span> {post.title}
+            <Link style={{textDecoration: 'none'}} to={`/${post.user._id}`}>
+                        <span class="photo__comment-author">{post.user.name}</span></Link> {post.title}
                     </li>
                 { post.comments.map( comment => 
                      <li class="photo__comment">
-                        <span class="photo__comment-author">{comment.user.name}</span> {comment.content}
+                         <Link style={{textDecoration: 'none'}} to={`/${comment.user._id}`}>
+                        <span class="photo__comment-author" style={{cursor: 'pointer'}}>{comment.user.name}</span></Link> {comment.content}
+                    
                     </li>
                     ) }
                    

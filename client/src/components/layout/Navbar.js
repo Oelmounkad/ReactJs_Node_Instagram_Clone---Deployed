@@ -154,6 +154,7 @@ const Navbar = () => {
 </div>
        {/*finish modal to add a post*/}  
 
+
             <li class="navigation__list-item">
                     <a href="#" class="navigation__link">
                     <i class="fas fa-paper-plane fa-lg"></i>
