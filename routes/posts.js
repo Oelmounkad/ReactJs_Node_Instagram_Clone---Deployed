@@ -16,7 +16,7 @@ router.get('/all' , async (req,res) => {
     {path: 'likers' , select: 'name'},
     {path: 'comments',populate: {
         path: 'user'
-      }}])
+      }}]).sort({ date: 'desc'})
 
     if(!posts) {
         return res.status(404).send('No posts in the database !')

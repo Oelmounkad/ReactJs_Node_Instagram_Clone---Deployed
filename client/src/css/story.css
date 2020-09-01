@@ -1,0 +1,20 @@
+#stories {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+
+  max-width: 600px;
+  max-height: 80px;
+  margin-bottom: 65px;
+}
+
+#stories .story {
+  color: black;
+  height: 90px;
+  margin-top: 12.5%;
+}

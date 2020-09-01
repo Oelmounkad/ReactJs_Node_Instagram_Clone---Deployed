@@ -1,5 +1,6 @@
 import {
     GET_ALL_POSTS,
+    ADD_POST,
     POST_ERROR,
     POST_ADD_LIKE,
     POST_DELETE_LIKE,
@@ -13,6 +14,11 @@ export default (state,action) => {
         return {
             ...state,
             allPosts : action.payload
+        }
+        case ADD_POST: 
+        return {
+            ...state,
+            allPosts : [action.payload, ...state.allPosts]
         }
         case POST_ADD_LIKE:
             return {

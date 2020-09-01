@@ -74,6 +74,9 @@ const PostItem = ({post}) => {
             </div>
     <span class="photo__likes">{post.likes} { post.likes === 1 ? 'like' : 'likes' } </span>
             <ul class="photo__comments">
+            <li class="photo__comment">
+                        <span class="photo__comment-author">{post.user.name}</span> {post.title}
+                    </li>
                 { post.comments.map( comment => 
                      <li class="photo__comment">
                         <span class="photo__comment-author">{comment.user.name}</span> {comment.content}

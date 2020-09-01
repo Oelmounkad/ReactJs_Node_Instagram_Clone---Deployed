@@ -10,6 +10,7 @@ import AuthContext from '../auth/AuthContext'
 
 import {
     GET_ALL_POSTS,
+    ADD_POST,
     POST_ERROR,
     POST_ADD_LIKE,
     POST_DELETE_LIKE,
@@ -134,6 +135,26 @@ const {user} = authContext
         
     }
 
+    // Add a post
+    const addPost = async postData => {
+        if(localStorage.token){
+            setAuthToken(localStorage.token)
+        }
+        try {
+            const res = await axios.post('/api/posts',postData)
+            dispatch({
+                type: ADD_POST,
+                payload: res.data
+            })
+
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.data
+            })
+        }
+    }
+
 
 
    return (
@@ -142,6 +163,7 @@ const {user} = authContext
         allPosts: state.allPosts,
         error: state.error,
         getAllPosts,
+        addPost,
         postAddLike,
         postDeletelike,
         commentPost

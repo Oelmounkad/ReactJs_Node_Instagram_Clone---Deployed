@@ -3,6 +3,7 @@ import React,{useContext} from 'react'
 import PostContext from '../../context/post/PostContext'
 import { useEffect } from 'react'
 import PostItem from '../post/PostItem'
+import Stories from '../story/Stories'
 
  const Feed = () => {
      
@@ -14,8 +15,11 @@ import PostItem from '../post/PostItem'
         getAllPosts()
     })
 
-    return (
+    return ( 
+        <>
+    <Stories />
         <main id="feed">
+           
             { allPosts !== null ? 
             allPosts.map(post => ( 
 
@@ -27,6 +31,7 @@ import PostItem from '../post/PostItem'
                     </div>
 </div> }
         </main>
+        </>
     )
 }
 export default Feed
