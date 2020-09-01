@@ -14,6 +14,10 @@ const PostSchema = mongoose.Schema({
          type: String,
          required: true
          },
+    location:{
+         type: String,
+         required: false
+         },
     likes: {
         type: Number,
         default: 0

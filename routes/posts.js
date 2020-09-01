@@ -106,6 +106,7 @@ router.post('/', auth , async (req, res) => {
     const newPost = new Post({
         user: req.user.id,
         title: req.body.title,
+        location: req.body.location,
         img_url,
     })
     const resu = await newPost.save()

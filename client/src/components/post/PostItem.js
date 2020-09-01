@@ -55,7 +55,7 @@ const PostItem = ({post}) => {
                     {post.user.name}
                     </Link>
                     </span>
-                <span class="photo__location">location xD</span>
+                <span class="photo__location">{post.location}</span>
             </div>
             <i class="fas fa-ellipsis-h"></i>
         </header>
