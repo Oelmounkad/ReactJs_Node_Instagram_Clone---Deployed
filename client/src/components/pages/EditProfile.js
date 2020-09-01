@@ -17,23 +17,59 @@ import { useHistory } from 'react-router-dom'
     const [profile, setProfile] = useState({   
         name: '',
         fullname: '',
+        profile_pic: '',
         website: '',
         bio: '',
         email: '',
         phone:''
     })
-  
+
+    const [fileInputState, setFileInputState] = useState('');
+    const [previewSource, setPreviewSource] = useState('');
+    const [selectedFile, setSelectedFile] = useState();
+
     const onChange = e => {
         setProfile({
             ...profile,
             [e.target.name]: e.target.value
         })
     }
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        previewFile(file);
+        setSelectedFile(file);
+        setFileInputState(e.target.value);
+    };
+
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        };
+    };
+    
     const onSubmit = e => {
         e.preventDefault()
-        //console.log(profile)
-        editProfile(user._id,profile)
-        history.push(`/${user._id}`)
+        
+        if (!selectedFile) return;
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onloadend = () => {
+            //uploadImage(reader.result);
+            console.log('base : ',reader.result)
+            editProfile(user._id,profile,reader.result)
+
+            setFileInputState('');
+            setPreviewSource('');
+
+            history.push(`/${user._id}`)
+        };
+        reader.onerror = () => {
+            console.error('AHHHHHHHH!!');
+        };
+
+        
         
 
     }
@@ -65,14 +101,26 @@ import { useHistory } from 'react-router-dom'
 
     {profileData !== null ?  
     <main id="edit-profile">
-        <div class="edit-profile__container">
+        <form onSubmit={onSubmit}>
+           <div class="edit-profile__container">
             <header class="edit-profile__header">
                 <div class="edit-profile__avatar-container">
                     <img src={profileData.profile_pic} class="edit-profile__avatar" />
                 </div>
-                <h4 class="edit-profile__username">{profileData.name}</h4>
+                <div>
+                   <h4>{profileData.name}</h4>
+               {/*<h5 onClick={() => console.log('hey')} style={{color: '#3d5afe'}} >Edit photo</h5> */}
+        <input type="file"
+        id="fileInput"
+        type="file"
+        name="image"
+        onChange={handleFileInputChange}
+        value={fileInputState}
+        className="form-input" />
+                </div>
+                
             </header>
-            <form onSubmit={onSubmit} class="edit-profile__form">
+            <div class="edit-profile__form">
                 <div class="form__row">
                     <label for="full-name" class="form__label">Full Name:</label>
                     <input id="full-name" type="text" class="form__input" name="fullname" value={profile.fullname} onChange={onChange} />
@@ -99,8 +147,18 @@ import { useHistory } from 'react-router-dom'
                 </div>
 
                 <input type="submit" value="Submit" />
-            </form>
-        </div>
+            </div>
+        </div> 
+        </form>
+
+        {previewSource && (
+                <img
+                    src={previewSource}
+                    alt="chosen"
+                    style={{ height: '300px' }}
+                />
+            )}
+        
     </main> :
       <div class="d-flex justify-content-center">
       <div class="spinner-border" role="status">

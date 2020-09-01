@@ -50,14 +50,14 @@ const ProfileState = props => {
    }
 
    //Edit Profile
-   const editProfile = async (userid,pData) => {
+   const editProfile = async (userid,pData,base64) => {
        
     if(localStorage.token){
         setAuthToken(localStorage.token)
     }
 
        try {
-
+        pData.profile_pic = base64
         await axios.put(`/api/users/${userid}`,pData)
 
        } catch (err) {

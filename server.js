@@ -11,8 +11,7 @@ connectDB()
 const PORT = process.env.PORT || 5000 
 
 //Init Middleware
-app.use(express.json({extended:true}))
-
+app.use(express.json({limit: '50mb',extended:true}))
 
 // Users routes
 app.use('/api/users',require('./routes/users'))

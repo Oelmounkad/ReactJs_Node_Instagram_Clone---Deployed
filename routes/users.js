@@ -22,17 +22,16 @@ router.post('/',async (req,res) => {
         if(user){
             return res.status(400).json({msg: 'User already exists'})
         }
-
         let img_url = ""
 
         if(req.body.profile_pic){
-           // Upload user image
-        
-        // upload image to cloudinary
-        await cloudinary.uploader.upload(req.body.profile_pic)
+
+        const fileStr = req.body.profile_pic;
+         await cloudinary.uploader.upload(fileStr)
         .then((result) => {
             // Recuperate the url of the image stored
           img_url = result.secure_url
+          console.log('image url : '+img_url)
         })
         .catch((error) => {
           res.status(500).send({
@@ -122,6 +121,27 @@ try {
         return res.status(404).json({msg: 'User doesn\'t exist'})
     }
     else{
+
+        let img_url = ""
+
+        if(req.body.profile_pic){
+
+        const fileStr = req.body.profile_pic;
+         await cloudinary.uploader.upload(fileStr)
+        .then((result) => {
+            // Recuperate the url of the image stored
+          img_url = result.secure_url
+
+          modifications.profile_pic = img_url
+        })
+        .catch((error) => {
+          res.status(500).send({
+            message: "failure",
+            error,
+          })
+        })
+}
+
         // Update the profile
     user = await User.findByIdAndUpdate(req.params.id,
         {$set : modifications},
