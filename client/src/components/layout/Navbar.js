@@ -41,9 +41,15 @@ const Navbar = () => {
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
-        previewFile(file);
+        if(file instanceof Blob){
+            previewFile(file);
         setSelectedFile(file);
         setFileInputState(e.target.value);
+        }else{
+            setPreviewSource('');
+            setFileInputState('');
+        }
+        
     };
 
     const previewFile = (file) => {
