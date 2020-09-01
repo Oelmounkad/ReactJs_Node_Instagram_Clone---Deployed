@@ -120,6 +120,13 @@ import { useHistory } from 'react-router-dom'
                 </div>
                 
             </header>
+            {previewSource && (
+                <img
+                    src={previewSource}
+                    alt="chosen"
+                    style={{ height: '300px' }}
+                />
+            )}
             <div class="edit-profile__form">
                 <div class="form__row">
                     <label for="full-name" class="form__label">Full Name:</label>
@@ -150,14 +157,6 @@ import { useHistory } from 'react-router-dom'
             </div>
         </div> 
         </form>
-
-        {previewSource && (
-                <img
-                    src={previewSource}
-                    alt="chosen"
-                    style={{ height: '300px' }}
-                />
-            )}
         
     </main> :
       <div class="d-flex justify-content-center">
