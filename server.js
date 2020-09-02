@@ -25,6 +25,10 @@ app.use('/api/posts',require('./routes/posts'))
 // Comments routes
 app.use('/api/comments',require('./routes/comments'))
 
+// Notifications routes
+app.use('/api/notifications',require('./routes/notifications'))
+
+
 //Serve static assets in production
 
 if(process.env.NODE_ENV === 'production'){

@@ -1,25 +1,28 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState} from 'react'
 
 import PostContext from '../../context/post/PostContext'
 import { useEffect } from 'react'
 import PostItem from '../post/PostItem'
 import Stories from '../story/Stories'
+import Notif from '../layout/Notif'
+
 
  const Feed = () => {
      
     const postContext = useContext(PostContext)
     const {allPosts,getAllPosts} = postContext
 
-    
+
+
     useEffect(() => {
         getAllPosts()
     })
 
     return ( 
         <>
+  <Notif message="Test notification !!" />
     <Stories />
         <main id="feed">
-           
             { allPosts !== null ? 
             allPosts.map(post => ( 
 
