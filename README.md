@@ -4,4 +4,4 @@
 
 ## The Application Link:
 
-https://instagram-clone-ouss.herokuapp.com/
+https://instagram-clone-react-node-app.netlify.app/
